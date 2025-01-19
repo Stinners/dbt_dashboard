@@ -1,0 +1,64 @@
+.container {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.card-holder {
+    max-width: 1600px;
+    margin: auto;
+}
+
+.card-holder, .card-shape {
+    min-height: 220px;
+    border-radius: 8px;
+}
+
+
+.job-card {
+    overflow: hidden;
+    height: 100%
+    padding: 0;
+    margin: 0;
+    border: 0;
+    text-overflow: ellipsis;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-header {
+    padding: 0 0 0.2em 0 !important;
+}
+
+.job-card__wrapper {
+    padding: 1.5em;
+    border: 1px solid;
+    margin-bottom: 1em;
+}
+
+.card-group {
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+
+.card-group, h2 {
+    margin: 0.4 0 0.4em 0 !important;
+}
+
+.card-body, p {
+    margin-bottom: 0.2em;
+    font-size: 1.1em;
+}
+
+.navbar {
+    padding: 5px 20px 10px 20px;
+    margin: 0 !important;
+    width: 100vw;
+}
+
+.navbar, h1 {
+    margin: 5px;
+    line-height: 1;
+}
