@@ -1,6 +1,10 @@
 import type { Component } from 'solid-js';
 
-const NavBar: Component = () => {
+type NavBarProps = {
+    refreshFunc: () => Promise<void>
+}
+
+const NavBar: Component<NavBarProps> = (props: NavBarProps) => {
     return (
         <header class="navbar bg-secondary">
             <section class="navbar-section">
@@ -8,7 +12,7 @@ const NavBar: Component = () => {
             </section>
 
             <section class="navbar-section">
-                <button class="btn">Refresh Data</button>
+                <button class="btn" onClick={props.refreshFunc}>Refresh Data</button>
             </section>
         </header>
     )

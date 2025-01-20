@@ -10,4 +10,4 @@ is_fast_api = sys.argv[0].endswith("fastapi")
 
 if not is_fast_api:
     print("Run backend with 'fastapi' command")
-    print("    e.g. 'fastapi dev main'")
+    print("    e.g. 'fastapi dev main.py'")

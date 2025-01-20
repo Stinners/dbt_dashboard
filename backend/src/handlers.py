@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 import sys
-import pdb
 
 from sqlite3 import Connection
 
@@ -15,7 +14,6 @@ def _get_start_date(conn: Connection, start_date: datetime, use_watermark) -> da
         try:
             last_run_started_row = conn.execute("Select max(started_at) from run;").fetchone()
             last_run_started = DbtApi.parse_timestamp(last_run_started_row[0])
-            pdb.set_trace()
             if last_run_started > start_date:
                 start_date = last_run_started
             else:

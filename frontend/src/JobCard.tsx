@@ -1,10 +1,5 @@
-import dayjs from "dayjs"
-import duration from "dayjs/plugin/duration";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { Component, For, Show } from 'solid-js';
-
-dayjs.extend(duration);
-dayjs.extend(relativeTime);
+import moment from 'moment';
 
 export type JobCardData = {
     // Job data 
@@ -22,56 +17,35 @@ export type JobCardData = {
     duration?: string
 }
 
-const durationParts: [string, (duration.Duration) => number][]  = [
-    ["years", dur => dur.years()],
-    ["months", dur => dur.months()],
-    ["days", dur => dur.months()],
-    ["hours", dur => dur.months()],
-    ["minutes", dur => dur.months()],
-    ["seconds", dur => dur.months()],
-]
-
-// TODO Display just he two longest components of the duration
-const formatDayJsDuration = (dur: duration.Duration, includeAgo = false) => {
-    if (includeAgo) {
-        return dur.format("H [hours] m [minutes] [ago]");
-    } else {
-        return dur.format("H [hours] m [minutes]");
-    }
-
-}
-
+//  2025-01-02T12:43:06.732752
+const DateFormat = 'YYYY-MM-DDTHH:mm:ss.SSSSSS';
 const formatStartTime = (timeStr?: string): string => {
     if (timeStr) {
-       let datetime = dayjs(timeStr);
-       let diffInMilliseconds = dayjs().diff(datetime);
-       let duration = dayjs.duration(diffInMilliseconds);
-       return formatDayJsDuration(duration);
+        let date = moment.utc(timeStr, DateFormat).local();
+        return date.format("MMM Do LT");
     } else {
         return "---";
     }
 }
 
-const durationRE = /([0-9]+):([0-9]+):([0-9]+)/
+const displayDuration = (duration: moment.Duration): string => {
+    if (duration.hours() != 0) {
+        return `${duration.hours()}hours ${duration.minutes()} minutes`
+    } else if (duration.minutes() != 0) {
+        return `${duration.minutes()} minutes ${duration.seconds()} seconds`
+    } else {
+        return `${duration.seconds()} seconds`
+    }
+}
+
 const formatDuration = (durationStr?: string): string => {
     if (durationStr) {
-        let match = durationStr.match(durationRE);
-
-        if (!match) {
-            return "---"
-        }
-
-        let hours  = parseInt(match[1]);
-        let minutes = parseInt(match[2]);
-        let seconds = parseInt(match[3]);
-
-        let duration = dayjs.duration({hours, minutes, seconds});
-
-        return formatDayJsDuration(duration);
-    } else {
+        let duration = moment.duration(durationStr);
+        return displayDuration(duration);
+    }
+    else {
         return "---";
     }
-    
 }
 
 

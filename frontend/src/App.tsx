@@ -72,12 +72,28 @@ const matchJobsWithRuns = (jobs: Job[], runs: Run[]) => {
 
 
 const App: Component = () => {
-    const [ jobs ] = createResource(fetchJobs);
-    const [ runs ] = createResource(fetchRuns);
+    const [ jobs, {refetch: refetchJobs} ] = createResource(fetchJobs);
+    const [ runs, {refetch: refetchRuns}] = createResource(fetchRuns);
+
+    const refreshData= async(): Promise<void> => {
+        console.log("Refreshing data from backend");
+        const query = await fetch("/api/refresh/all", {method: "post"})
+        const response = await query.json();
+
+        if (response["status"] = "success") {
+            console.log("Refreshed Data at backend");
+            await refetchRuns();
+            await refetchJobs();
+            console.log("Refreshed Data at frontent");
+        }
+        else {
+            console.log("Failed to refresh data at backend");
+        }
+    }
 
     return (
       <div class='container'>
-          <NavBar/>
+          <NavBar refreshFunc={refreshData}/>
 
           <main class='card-holder'>
               <Show when={jobs() && runs()}>
